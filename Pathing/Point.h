@@ -14,9 +14,8 @@ namespace Pathing
     public:
         Point() = default;
         Vec2 m_vecOrigin;
-        bool m_bLocked = false;
         std::vector<size_t> m_vNeighbors;
-        float GetHeruistic(const Point& start, const Point& end ) const
+        [[nodiscard]] float GetHeruistic(const Point& start, const Point& end ) const
         {
             return m_vecOrigin.DistTo(start.m_vecOrigin) + m_vecOrigin.DistTo(end.m_vecOrigin);
         }
@@ -24,6 +23,17 @@ namespace Pathing
         {
             m_vecOrigin = vec;
             m_vNeighbors = neighbors;
+        }
+        bool operator==(const Point& other) const
+        {
+            if (this == &other)
+                return true;
+
+            return m_vecOrigin == other.m_vecOrigin;
+        }
+        bool operator!=(const Point& other) const
+        {
+            return !(*this == other);
         }
     };
 
